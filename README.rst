@@ -6,7 +6,7 @@ Tornado Crontab is a library that can make the task apps like Crontab.
 Hello, CronTab
 --------------
 
-Here is an example every minute task app.:: python
+Here is an example every minute task app.::
 
 	import tornado.ioloop
 	import tornado_crontab
