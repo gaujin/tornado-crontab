@@ -10,4 +10,4 @@ python:
     - "nightly"
     - "pypy3"
 install: "pip install -r requirements.txt"
-script: nosetests
+script: nosetests -v
