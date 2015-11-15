@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import time
 import unittest
 
@@ -27,7 +27,7 @@ class FakeTimeIOLoop(object):
         for _ in range(self._max):
             _timeout, _callback = self._callback
             self._freezer.stop()
-            self._freezer.time_to_freeze = datetime.datetime.utcfromtimestamp(_timeout)
+            self._freezer.time_to_freeze = datetime.utcfromtimestamp(_timeout)
             self._freezer.start()
             _callback()
             self._offset = _timeout - time.time()
@@ -38,29 +38,41 @@ class FakeTimeIOLoop(object):
 
 class TestCronTabCallback(unittest.TestCase):
 
-    def _test(self, crontab, asserts):
+    BEGIN_TIME = "2015-11-08T00:00:00Z"
 
-        _freezer = freeze_time("2015-11-08T00:00:00Z")
-        _freezer.start()
+    def __init__(self, *args, **kwargs):
+        super(TestCronTabCallback, self).__init__(*args, **kwargs)
+
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        self._freezer = freeze_time(self.BEGIN_TIME)
+        self._freezer.start()
+        self.io_loop = FakeTimeIOLoop(self._freezer)
+        self.calls = []
+
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+        self._freezer.stop()
+
+    def crontab_task(self):
+        self.calls.append(datetime.utcfromtimestamp(
+                            self.io_loop.time()).strftime("%FT%T"))
+
+    def _target(self, schedule):
 
         from tornado_crontab import CronTabCallback
 
-        self.io_loop = FakeTimeIOLoop(_freezer)
-        calls = []
-
-        def cb():
-            calls.append(datetime.datetime.utcfromtimestamp(
-                self.io_loop.time()).strftime("%FT%T"))
-
-        pc = CronTabCallback(cb, crontab, self.io_loop)
+        pc = CronTabCallback(self.crontab_task, schedule, self.io_loop)
         pc.start()
 
+    def _test(self, schedule, asserts):
+
+        self._target(schedule)
         self.io_loop.call_later(10, self.io_loop.stop)
         self.io_loop.start()
 
-        _freezer.stop()
-
-        self.assertEqual(calls, asserts)
+        self.assertEqual(self.calls, asserts)
 
     def test_every_minute(self):
 
@@ -109,6 +121,22 @@ class TestCronTabCallback(unittest.TestCase):
                                  "2020-01-01T00:00:00", "2021-01-01T00:00:00",
                                  "2022-01-01T00:00:00", "2023-01-01T00:00:00",
                                  "2024-01-01T00:00:00", "2025-01-01T00:00:00"])
+
+
+class TestCrontabDecorator(TestCronTabCallback):
+
+    def __init__(self, *args, **kwargs):
+        super(TestCrontabDecorator, self).__init__(*args, **kwargs)
+
+    def _target(self, schedule):
+
+        from tornado_crontab import crontab
+
+        @crontab(schedule, self.io_loop)
+        def decorate_task():
+            self.crontab_task()
+
+        decorate_task()
 
 
 if __name__ == "__main__":
