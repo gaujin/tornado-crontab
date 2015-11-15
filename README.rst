@@ -11,17 +11,36 @@ Usage
 
 Here is an example every minute task app::
 
+	from __future__ import print_function
+	import functools
     import tornado.ioloop
     import tornado_crontab
     
-    def hello_crontab():
+    def hello_crontab(value):
     
-        print("Hello, CronTab")
+        print("Hello, {}".format(value))
     
     if __name__ == "__main__":
     
-        tornado_crontab.CronTabCallback(hello_crontab, "* * * * *").start()
+    	_func = functools.partial(hello_crontab, *["crontab"])
+        tornado_crontab.CronTabCallback(_func, "* * * * *").start()
         tornado.ioloop.IOLoop.instance().start()    
+
+decorator style task app::
+
+	from __future__ import print_function
+	import tornado.ioloop
+	from tornado_crontab import crontab
+	
+	@crontab("* * * * *")
+	def hello_crontab(value):
+
+		print("Hello, {}".format(value))
+
+	if __name__ == "__main__":
+
+		hello_crontab("crontab")
+		tornado.ioloop.IOLoop.instance().start()
 
 Using
 =====
