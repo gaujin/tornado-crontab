@@ -60,6 +60,6 @@ See the LICENSE file for specific terms.
 .. |travis| image:: https://travis-ci.org/gaujin/tornado-crontab.svg?branch=master
    :target: https://travis-ci.org/gaujin/tornado-crontab
 
-.. |requires|:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?branch=master
      :target: https://requires.io/github/gaujin/tornado-crontab/requirements/?branch=master
      :alt: Requirements Status
