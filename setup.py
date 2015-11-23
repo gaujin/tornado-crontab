@@ -37,7 +37,8 @@ setup(
     author_email="tornado-crontab@gaujin.jp",
     url="https://github.com/gaujin/tornado-crontab",
     license="MIT",
-    description=long_description,
+    description="CronTab callback for Tornado",
+    long_description=long_description,
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: MIT License",
@@ -49,6 +50,6 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
-        "Framework :: Tornado",
+        "Framework :: tornado",
     ],
 )
