@@ -74,9 +74,9 @@ License
 
 See the LICENSE file for specific terms.
 
-.. |travis| image:: https://travis-ci.org/gaujin/tornado-crontab.svg?branch=v0.2
+.. |travis| image:: https://travis-ci.org/gaujin/tornado-crontab.svg?branch=master
    :target: https://travis-ci.org/gaujin/tornado-crontab
 
-.. |requires| image:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?tag=v0.2
-     :target: https://requires.io/github/gaujin/tornado-crontab/requirements/?tag=v0.2
+.. |requires| image:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?branch=master
+     :target: https://requires.io/github/gaujin/tornado-crontab/requirements/?branch=master
      :alt: Requirements Status
