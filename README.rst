@@ -6,6 +6,23 @@ tornado-crontab is a library that can make the task apps like crontab.
 
 |travis| |requires|
 
+Installation
+============
+
+Automatic installation::
+
+   $ pip install tornado-crontab
+
+torando-crontab is listed in `PyPI <https://pypi.python.org/pypi/tornado-crontab>`_ and can be installed with pip or easy_install.
+
+Manual installation::
+
+   $ git clone https://github.com/gaujin/tornado-crontab.git
+   $ cd tornado-crontab
+   $ python setup.py install
+
+tornado-crontab source code is `hosted on GitHub <https://github.com/gaujin/tornado-crontab>`_
+
 Usage
 =====
 
@@ -57,9 +74,9 @@ License
 
 See the LICENSE file for specific terms.
 
-.. |travis| image:: https://travis-ci.org/gaujin/tornado-crontab.svg?branch=master
+.. |travis| image:: https://travis-ci.org/gaujin/tornado-crontab.svg?branch=v0.2
    :target: https://travis-ci.org/gaujin/tornado-crontab
 
-.. |requires| image:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?branch=master
-     :target: https://requires.io/github/gaujin/tornado-crontab/requirements/?branch=master
+.. |requires| image:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?tag=v0.2
+     :target: https://requires.io/github/gaujin/tornado-crontab/requirements/?tag=v0.2
      :alt: Requirements Status
