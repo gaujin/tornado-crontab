@@ -15,6 +15,14 @@ class CronTabCallback(PeriodicCallback):
     def _calc_callbacktime(self, now=None):
         return math.ceil(self.__crontab.next(now)) * 1000.0
 
+    def _run(self):
+
+        if self._running:
+            # TODO: here write of run log
+            pass
+
+        return PeriodicCallback._run(self)
+
     def _schedule_next(self):
         self.callback_time = self._calc_callbacktime()
         super(CronTabCallback, self)._schedule_next()
