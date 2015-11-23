@@ -34,7 +34,7 @@ setup(
     packages=["tornado_crontab"],
     install_requires=["tornado", "crontab"],
     author="Takehito Yamada",
-    author_email="takehito@gaujin.jp",
+    author_email="tornado-crontab@gaujin.jp",
     url="https://github.com/gaujin/tornado-crontab",
     license="MIT",
     description=long_description,
