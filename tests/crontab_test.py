@@ -212,7 +212,6 @@ class TestCrontabLogging(unittest.TestCase):
         log_crontab.addHandler(logging.StreamHandler(_stream))
         _crontab._logging(logging.DEBUG)
         _log = _stream.getvalue()
-        _stream.close()
 
         self.assertEqual(
             " ".join(["tornado-crontab[%d]:" % os.getpid(),
