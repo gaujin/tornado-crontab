@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-import cStringIO
+import StringIO
 from datetime import datetime
 import functools
 import logging
@@ -204,7 +204,7 @@ class TestCrontabLogging(unittest.TestCase):
             functools.partial(_func, "value1", arg2="value2"), "* * * * *")
         _crontab._running = True
 
-        _stream = cStringIO.StringIO()
+        _stream = StringIO.StringIO()
         log_crontab.addHandler(logging.StreamHandler(_stream))
         _crontab._logging(logging.DEBUG)
         _log = _stream.getvalue()
