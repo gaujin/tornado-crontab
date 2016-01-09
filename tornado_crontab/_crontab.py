@@ -48,7 +48,6 @@ class CronTabCallback(PeriodicCallback):
             return _get_func(_func.func)
 
         _func = _get_func(self.callback)
-        _arg_info = inspect.getcallargs(_func, *_args, **_kwargs)
         return _func, _args, _kwargs
 
     def _logging(self, level):
