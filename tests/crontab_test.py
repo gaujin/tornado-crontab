@@ -159,7 +159,7 @@ class TestCrontabLogging(unittest.TestCase):
             pass
 
         _crontab = CronTabCallback(_func, "* * * * *")
-        assert (_func, [], {}) == _crontab._get_func_spec()
+        self.assertEqual((_func, [], {}), _crontab._get_func_spec())
 
     def test__get_func_spec_args(self):
 
@@ -171,12 +171,12 @@ class TestCrontabLogging(unittest.TestCase):
         _args = ["value1", "value2"]
         _crontab = CronTabCallback(
             functools.partial(_func, *_args), "* * * * *")
-        assert (_func, _args, {}) == _crontab._get_func_spec()
+        self.assertEqual((_func, _args, {}), _crontab._get_func_spec())
 
         _crontab = CronTabCallback(
             functools.partial(
                 functools.partial(_func, _args[0]), _args[1]), "* * * * *")
-        assert (_func, _args, {}) == _crontab._get_func_spec()
+        self.assertEqual((_func, _args, {}), _crontab._get_func_spec())
 
     def test__get_func_spec_kwargs(self):
 
@@ -188,13 +188,13 @@ class TestCrontabLogging(unittest.TestCase):
         _kwargs = {"arg1": "value1", "arg2": "value2"}
         _crontab = CronTabCallback(
             functools.partial(_func, **_kwargs), "* * * * *")
-        assert (_func, [], _kwargs) == _crontab._get_func_spec()
+        self.assertEqual((_func, [], _kwargs), _crontab._get_func_spec())
 
         _crontab = CronTabCallback(
             functools.partial(
                 functools.partial(_func, arg1="value1"), arg2="value2"),
             "* * * * *")
-        assert (_func, [], _kwargs) == _crontab._get_func_spec()
+        self.assertEqual((_func, [], _kwargs), _crontab._get_func_spec())
 
     def test__logging(self):
 
@@ -214,11 +214,11 @@ class TestCrontabLogging(unittest.TestCase):
         _log = _stream.getvalue()
         _stream.close()
 
-        assert " ".join([
-            "tornado-crontab[%d]:" % os.getpid(),
-            "(%s)" % (os.environ.get("USERNAME")
-                      if os.name == "nt" else os.getlogin()),
-            "FUNC (_func ['value1'] {'arg2': 'value2'})\n"]) == _log
+        self.assertEqual(
+            " ".join(["tornado-crontab[%d]:" % os.getpid(),
+                      "(%s)" % (os.environ.get("USERNAME")
+                                if os.name == "nt" else os.getlogin()),
+                      "FUNC (_func ['value1'] {'arg2': 'value2'})\n"]), _log)
 
 
 if __name__ == "__main__":
