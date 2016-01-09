@@ -42,7 +42,9 @@ class CronTabCallback(PeriodicCallback):
             for _arg in reversed(_func.args):
                 _args.insert(0, _arg)
 
-            _kwargs.update(_func.keywords)
+            if _func.keywords:
+                _kwargs.update(_func.keywords)
+
             return _get_func(_func.func)
 
         _func = _get_func(self.callback)
