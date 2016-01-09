@@ -1,4 +1,10 @@
+from __future__ import print_function
+
+import cStringIO
 from datetime import datetime
+import functools
+import logging
+import os
 import time
 import unittest
 
@@ -57,7 +63,7 @@ class TestCronTabCallback(unittest.TestCase):
 
     def crontab_task(self):
         self.calls.append(datetime.utcfromtimestamp(
-                            self.io_loop.time()).strftime("%FT%T"))
+            self.io_loop.time()).strftime("%FT%T"))
 
     def _target(self, schedule):
 
@@ -139,5 +145,77 @@ class TestCrontabDecorator(TestCronTabCallback):
         decorate_task()
 
 
+class TestCrontabLogging(unittest.TestCase):
+
+    def test__get_func_spec_no_args(self):
+
+        from tornado_crontab import CronTabCallback
+
+        def _func():
+            pass
+
+        _crontab = CronTabCallback(_func, "* * * * *")
+        assert (_func, [], {}) == _crontab._get_func_spec()
+
+    def test__get_func_spec_args(self):
+
+        from tornado_crontab import CronTabCallback
+
+        def _func(arg1, arg2):
+            pass
+
+        _args = ["value1", "value2"]
+        _crontab = CronTabCallback(
+            functools.partial(_func, *_args), "* * * * *")
+        assert (_func, _args, {}) == _crontab._get_func_spec()
+
+        _crontab = CronTabCallback(
+            functools.partial(
+                functools.partial(_func, _args[0]), _args[1]), "* * * * *")
+        assert (_func, _args, {}) == _crontab._get_func_spec()
+
+    def test__get_func_spec_kwargs(self):
+
+        from tornado_crontab import CronTabCallback
+
+        def _func(arg1, arg2):
+            pass
+
+        _kwargs = {"arg1": "value1", "arg2": "value2"}
+        _crontab = CronTabCallback(
+            functools.partial(_func, **_kwargs), "* * * * *")
+        assert (_func, [], _kwargs) == _crontab._get_func_spec()
+
+        _crontab = CronTabCallback(
+            functools.partial(
+                functools.partial(_func, arg1="value1"), arg2="value2"),
+            "* * * * *")
+        assert (_func, [], _kwargs) == _crontab._get_func_spec()
+
+    def test__logging(self):
+
+        from tornado_crontab import CronTabCallback
+        from tornado_crontab._crontab import log_crontab
+
+        def _func(arg1, arg2):
+            pass
+
+        _crontab = CronTabCallback(
+            functools.partial(_func, "value1", arg2="value2"), "* * * * *")
+        _crontab._running = True
+
+        _stream = cStringIO.StringIO()
+        log_crontab.addHandler(logging.StreamHandler(_stream))
+        _crontab._logging(logging.DEBUG)
+        _log = _stream.getvalue()
+        _stream.close()
+
+        assert " ".join([
+            "tornado-crontab[%d]:" % os.getpid(),
+            "(%s)" % (os.environ.get("USERNAME")
+                      if os.name == "nt" else os.getlogin()),
+            "FUNC (_func ['value1'] {'arg2': 'value2'})\n"]) == _log
+
+
 if __name__ == "__main__":
-        unittest.main()
+    unittest.main()
