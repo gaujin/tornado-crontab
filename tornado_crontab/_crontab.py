@@ -2,6 +2,7 @@ import functools
 import logging
 import math
 import os
+import pwd
 
 from crontab import CronTab
 from tornado.ioloop import PeriodicCallback
@@ -23,7 +24,7 @@ class CronTabCallback(PeriodicCallback):
             callback, self._calc_callbacktime(), io_loop)
         self.pid = os.getpid()
         self.user = (os.environ.get("USERNAME")
-                     if os.name == "nt" else os.getlogin())
+                     if os.name == "nt" else pwd.getpwuid(os.getuid()).pw_name)
 
     def _calc_callbacktime(self, now=None):
         return math.ceil(self.__crontab.next(now)) * 1000.0
