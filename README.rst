@@ -35,7 +35,7 @@ Here is an example every minute task app::
     
    def hello_crontab(value):
     
-       print("Hello, {}".format(value))
+       print("Hello, {0}".format(value))
     
    if __name__ == "__main__":
     
@@ -52,7 +52,7 @@ decorator style task app::
    @crontab("* * * * *")
    def hello_crontab(value):
 
-       print("Hello, {}".format(value))
+       print("Hello, {0}".format(value))
 
    if __name__ == "__main__":
 
