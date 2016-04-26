@@ -1,0 +1,16 @@
+# https://ci.appveyor.com/project/gaujin/tornado-crontab
+environment:
+  matrix:
+    - PYTHON: "C:/Python27"
+    - PYTHON: "C:/Python34"
+    - PYTHON: "C:/Python35"
+
+init:
+  - "ECHO %PYTHON%"
+  - ps: "ls C:/Python*"
+
+install:
+  - "%PYTHON%/Scripts/pip.exe -r requirements.txt"
+
+test_script:
+  - "%PYTHON%/Scripts/nosetests -v"
