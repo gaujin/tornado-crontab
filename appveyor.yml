@@ -19,5 +19,7 @@ init:
 install:
   - "%PYTHON%/Scripts/pip.exe install -r requirements.txt"
 
+build: false
+
 test_script:
   - "%PYTHON%/Scripts/nosetests.exe -v"
