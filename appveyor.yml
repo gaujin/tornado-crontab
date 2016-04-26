@@ -20,4 +20,4 @@ install:
   - "%PYTHON%/Scripts/pip.exe install -r requirements.txt"
 
 test_script:
-  - "%PYTHON%/Scripts/nosetests -v"
+  - "%PYTHON%/Scripts/nosetests.exe -v"
