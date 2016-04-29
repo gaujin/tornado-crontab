@@ -4,7 +4,7 @@ tornado-crontab
 
 tornado-crontab is a library that can make the task apps like crontab.
 
-|travis| |requires|
+|travis| |appveyor| |requires|
 
 Installation
 ============
@@ -76,6 +76,9 @@ See the LICENSE file for specific terms.
 
 .. |travis| image:: https://travis-ci.org/gaujin/tornado-crontab.svg?branch=master
    :target: https://travis-ci.org/gaujin/tornado-crontab
+
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/5430hwe4d45j67rl?svg=true
+   :target: https://ci.appveyor.com/project/gaujin/tornado-crontab
 
 .. |requires| image:: https://requires.io/github/gaujin/tornado-crontab/requirements.svg?branch=master
      :target: https://requires.io/github/gaujin/tornado-crontab/requirements/?branch=master
