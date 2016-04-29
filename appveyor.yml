@@ -16,6 +16,8 @@ init:
   - "ECHO %PYTHON%"
   - ps: "ls C:/Python*"
 
+version: '#{build}'
+
 install:
   - "%PYTHON%/Scripts/pip.exe install -r requirements.txt"
 
