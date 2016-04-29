@@ -67,7 +67,7 @@ class TestCronTabCallback(unittest.TestCase):
 
     def crontab_task(self):
         self.calls.append(datetime.utcfromtimestamp(
-            self.io_loop.time()).strftime("%FT%T"))
+            self.io_loop.time()).strftime("%Y-%m-%dT%H:%M:%S"))
 
     def _target(self, schedule):
 
