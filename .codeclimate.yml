@@ -5,6 +5,9 @@ engines:
             threshold: 'B'
     pep8:
         enabled: true
+ratings:
+    paths:
+    - "**.py"
 exclude_paths:
 - "tests/*"
 - "setup.py"
