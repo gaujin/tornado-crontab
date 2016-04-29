@@ -1,4 +1,4 @@
-# https://www.codacy.com/app/gaujin/tornado-crontab
+# https://codeclimate.com/github/gaujin/tornado-crontab
 engines:
     radon:
         enabled: true
