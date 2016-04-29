@@ -1,4 +1,4 @@
-# https://www.codacy.com/app/gaujin/tornado-crontab/dashboard
+# https://www.codacy.com/app/gaujin/tornado-crontab
 engines:
     radon:
         enabled: true
@@ -8,7 +8,4 @@ engines:
         enabled: true
 ratings:
     paths:
-    - "**.py"
-exclude_paths:
-- "tests/*"
-- "setup.py"
+    - "tornado_crontab/**.py"
