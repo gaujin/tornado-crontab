@@ -1,4 +1,4 @@
 crontab==0.21.3
 freezegun==0.3.7
 nose
-tornado==4.3
+tornado==4.4
