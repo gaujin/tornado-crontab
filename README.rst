@@ -78,7 +78,7 @@ See the LICENSE file for specific terms.
    :target: https://travis-ci.org/gaujin/tornado-crontab
    :alt: Travis CI
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/5430hwe4d45j67rl?svg=true
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/2wsrfhy8sx100hwq?svg=true
    :target: https://ci.appveyor.com/project/gaujin/tornado-crontab
    :alt: AppVeyor
 
