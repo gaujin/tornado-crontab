@@ -213,10 +213,17 @@ class TestCrontabLogging(unittest.TestCase):
         _crontab._logging(logging.DEBUG)
         _log = _stream.getvalue()
 
+        # for windows
+        if os.name == "nt":
+            user = os.environ.get("USERNAME")
+
+        # for other os
+        else:
+            import pwd
+            user = pwd.getpwuid(os.geteuid()).pw_name
+
         self.assertEqual(
-            " ".join(["tornado-crontab[%d]:" % os.getpid(),
-                      "(%s)" % (os.environ.get("USERNAME")
-                                if os.name == "nt" else os.getlogin()),
+            " ".join(["tornado-crontab[%d]:" % os.getpid(), "(%s)" % user,
                       "FUNC (_func ['value1'] {'arg2': 'value2'})\n"]), _log)
 
 
