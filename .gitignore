@@ -3,3 +3,4 @@
 /tornado_crontab.egg-info/
 *.pyc
 *.pyo
+/.vscode/
