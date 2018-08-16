@@ -7,7 +7,6 @@ python:
     - "3.5"
     - "3.6"
     - "3.7-dev"
-    - "3.8-dev"
     - "nightly"
     - "pypy3.5-5.8.0"
 install: "pip install -r requirements.txt"
