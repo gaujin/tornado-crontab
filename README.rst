@@ -41,7 +41,7 @@ Here is an example every minute task app::
     
        _func = functools.partial(hello_crontab, *["crontab"])
        tornado_crontab.CronTabCallback(_func, "* * * * *").start()
-       tornado.ioloop.IOLoop.instance().start()    
+       tornado.ioloop.IOLoop.current().start()    
 
 decorator style task app::
 
@@ -57,7 +57,17 @@ decorator style task app::
    if __name__ == "__main__":
 
        hello_crontab("crontab")
-       tornado.ioloop.IOLoop.instance().start()
+       tornado.ioloop.IOLoop.current().start()
+
+Prerequisites
+=============
+
+tornado-crontab 0.4.x or earlier runs on Tornado 4.x or earlier.
+
+Deprecated arguments
+====================
+
+``io_loop`` argument to the function has been deprecated in v.0.4.
 
 Using
 =====

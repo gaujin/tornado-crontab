@@ -6,6 +6,7 @@ import os
 import warnings
 
 from crontab import CronTab
+from tornado import version_info as tornado_version_info
 from tornado.ioloop import PeriodicCallback
 
 
@@ -17,9 +18,12 @@ FORMAT_LOG_CRONTAB = " ".join(["tornado-crontab[%(pid)d]:",
                                "%(args)s %(kwargs)s)"])
 
 IS_TZ_SUPPORTED = "default_utc" in inspect.getargspec(CronTab.next).args
-UNSUPPORTED_MESSAGE = """\
+UNSUPPORTED_TZ_MESSAGE = """\
 Since crontab package version is low, UTC can not be used.
 When using it with UTC, upgrade the crontab package to 0.22.0+."""
+UNSUPPORTED_IOLOOP_MESSAGE = """\
+Since tornado package version is high, io_loop can not be used.
+When using it with io_loop, downgrade the tornado package to 4.5.3 or earlier."""
 
 
 class CronTabCallback(PeriodicCallback):
@@ -28,14 +32,19 @@ class CronTabCallback(PeriodicCallback):
     Schedule execution of the function.
     Timezone is local time by default.
     If you want to schedule with UTC, set `is_utc` to `True`.
+
+    .. versionchanged:: 0.3.3
+       Supported UTC.
+       If Timezone is not supported and `is_utc` is set to `True`,
+       a warning is output and `is_utc` is ignored.
+
+    .. versionchanged:: 0.4
+       Supported Tornado 5, warning is output and `io_loop` is ignored.
+       The `io_loop` argument is deprecated.
     """
 
     def __init__(self, callback, schedule, io_loop=None, is_utc=False):
         """ CrontabCallback initializer
-
-        .. note::
-            If Timezone is not supported and `is_utc` is set to `True`,
-            a warning is output and `is_utc` is ignored.
 
         :type callback: func
         :param callback: target schedule function
@@ -50,14 +59,22 @@ class CronTabCallback(PeriodicCallback):
         # If Timezone is not supported and `is_utc` is set to `True`,
         # a warning is output and `is_utc` is ignored.
         if not IS_TZ_SUPPORTED and is_utc:
-            warnings.warn(UNSUPPORTED_MESSAGE)
+            warnings.warn(UNSUPPORTED_TZ_MESSAGE)
             is_utc = False
 
         self.__crontab = CronTab(schedule)
         self.__is_utc = is_utc
 
-        super(CronTabCallback, self).__init__(
-            callback, self._calc_callbacktime(), io_loop)
+        arguments = dict(
+            callback=callback, callback_time=self._calc_callbacktime())
+
+        if tornado_version_info >= (5,):
+            if io_loop is not None:
+                warnings.warn(UNSUPPORTED_IOLOOP_MESSAGE)
+        else:
+            arguments.update(io_loop=io_loop)
+
+        super(CronTabCallback, self).__init__(**arguments)
 
         self.pid = os.getpid()
 
@@ -134,9 +151,14 @@ def crontab(schedule, io_loop=None, is_utc=False):
     Timezone is local time by default.
     If you want to schedule with UTC, set `is_utc` to `True`.
 
-    .. note::
-        If Timezone is not supported and `is_utc` is set to `True`,
-        a warning is output and `is_utc` is ignored.
+    .. versionchanged:: 0.3.3
+       Supported UTC.
+       If Timezone is not supported and `is_utc` is set to `True`,
+       a warning is output and `is_utc` is ignored.
+
+    .. versionchanged:: 0.4
+       Supported Tornado 5, warning is output and `io_loop` is ignored.
+       The `io_loop` argument is deprecated.
 
     :type schedule: str
     :param schedule: crotab expression
