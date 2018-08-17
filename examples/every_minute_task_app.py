@@ -13,4 +13,4 @@ if __name__ == "__main__":
 
     _func = functools.partial(hello_crontab, *["crontab"])
     tornado_crontab.CronTabCallback(_func, "* * * * *").start()
-    tornado.ioloop.IOLoop.instance().start()
+    tornado.ioloop.IOLoop.current().start()

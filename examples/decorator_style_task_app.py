@@ -12,4 +12,4 @@ def hello_crontab(value):
 if __name__ == "__main__":
 
     hello_crontab("crontab")
-    tornado.ioloop.IOLoop.instance().start()
+    tornado.ioloop.IOLoop.current().start()
