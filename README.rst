@@ -64,10 +64,11 @@ Prerequisites
 
 tornado-crontab 0.4.x or earlier runs on Tornado 4.x or earlier.
 
-Deprecated arguments
-====================
+Future policy of io_loop argument
+=================================
 
-``io_loop`` argument to the function has been deprecated in v.0.4.
+``io_loop`` argument to function and constructor is deprecated for 0.4.0 and deleted for 0.5.0.
+About this policy is based on the policy already indicated in Tornado, tornado-crontab also made the same policy.
 
 Using
 =====
