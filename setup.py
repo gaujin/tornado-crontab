@@ -32,7 +32,7 @@ setup(
     name="tornado-crontab",
     version=find_version("tornado_crontab", "__init__.py"),
     packages=["tornado_crontab"],
-    install_requires=["tornado", "crontab"],
+    install_requires=["tornado<5", "crontab"],
     author="Takehito Yamada",
     author_email="tornado-crontab@gaujin.jp",
     url="https://github.com/gaujin/tornado-crontab",
