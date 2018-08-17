@@ -1,0 +1,6 @@
+[nosetests]
+with-doctest=1
+with-coverage=1
+cover-package=tornado_crontab
+cover-html=1
+verbosity=2
