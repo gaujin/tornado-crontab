@@ -1,6 +1,9 @@
-/dist/
-/build/
-/tornado_crontab.egg-info/
 *.pyc
 *.pyo
+.coverage
+.noseids
 /.vscode/
+/build/
+/cover/
+/dist/
+/tornado_crontab.egg-info/
